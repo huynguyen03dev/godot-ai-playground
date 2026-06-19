@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "godot": {
+      "command": "node",
+      "args": ["/home/hazeruno/IT/workspace/godot-mcp-src/mcp-server/dist/index.js"],
+      "env": {
+        "GODOT_PATH": "/home/hazeruno/.local/bin/godot"
+      }
+    }
+  }
+}

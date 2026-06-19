@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://cto2y5n6pk66x"]
+
+[ext_resource type="Script" uid="uid://bj1sdjol40hy1" path="res://prototypes/horror-house/world_environment_setup.gd" id="1_jfteh"]
+[ext_resource type="Script" uid="uid://bjvc0m6yvyhjp" path="res://prototypes/horror-house/player.gd" id="1_spah1"]
+[ext_resource type="Script" uid="uid://cpqcdnausa1cu" path="res://prototypes/horror-house/monster.gd" id="2_jfteh"]
+[ext_resource type="PackedScene" uid="uid://b2dwi0vls5khc" path="res://assets/kenney/dungeon/room-large.glb" id="3_vp8ya"]
+[ext_resource type="PackedScene" uid="uid://cvm5bgq3rtnv1" path="res://assets/kenney/dungeon/corridor.glb" id="4_xenpo"]
+[ext_resource type="Script" uid="uid://cfcgvbbw774el" path="res://prototypes/horror-house/horror_effect_setup.gd" id="4_xjmge"]
+[ext_resource type="PackedScene" uid="uid://bxs153om4imv3" path="res://assets/kenney/dungeon/corridor-corner.glb" id="5_u8ggr"]
+[ext_resource type="PackedScene" uid="uid://cbnwjtj36ju1i" path="res://assets/kenney/dungeon/stairs.glb" id="6_2n2g1"]
+[ext_resource type="PackedScene" uid="uid://kg6rfcmnpc4o" path="res://assets/kenney/dungeon/gate-door.glb" id="7_ewvnc"]
+[ext_resource type="PackedScene" uid="uid://b83475m0j2y3" path="res://assets/kenney/furniture/desk.glb" id="8_s1d3x"]
+[ext_resource type="PackedScene" uid="uid://4ej4em8ee3jg" path="res://assets/kenney/furniture/books.glb" id="9_ki57d"]
+[ext_resource type="PackedScene" uid="uid://cahpnsikbx0nv" path="res://assets/kenney/furniture/tableCross.glb" id="10_hvafq"]
+[ext_resource type="PackedScene" uid="uid://c74xexdpulibc" path="res://assets/kenney/furniture/lampSquareTable.glb" id="11_kdttj"]
+[ext_resource type="PackedScene" uid="uid://boepsrqvb2key" path="res://assets/kenney/furniture/loungeDesignSofa.glb" id="12_nun78"]
+[ext_resource type="PackedScene" uid="uid://bpo72p85m6yua" path="res://assets/kenney/furniture/sideTableDrawers.glb" id="13_v3xsg"]
+[ext_resource type="Script" uid="uid://x7xy6wkhnn10" path="res://prototypes/horror-house/flicker_light.gd" id="14_apwqo"]
+
+[sub_resource type="CapsuleShape3D" id="PlayerShape"]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="MonsterShape"]
+radius = 0.45
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(24, 0.2, 24)
+
+[sub_resource type="BoxShape3D" id="WallNS"]
+size = Vector3(24, 5, 0.4)
+
+[sub_resource type="BoxShape3D" id="WallEW"]
+size = Vector3(0.4, 5, 24)
+
+[node name="HorrorHouse" type="Node3D" unique_id=538915745]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=331083734]
+script = ExtResource("1_jfteh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1881444979]
+transform = Transform3D(0.8660254, -0.35355338, 0.35355338, 0, 0.70710677, 0.70710677, -0.5, -0.6123724, 0.6123724, 0, 0, 0)
+light_color = Color(0.3, 0.35, 0.5, 1)
+light_energy = 0.08
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1432879632 groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_spah1")
+
+[node name="Head" type="Node3D" parent="Player" unique_id=1011636472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=905501562]
+fov = 80.0
+
+[node name="Flashlight" type="SpotLight3D" parent="Player/Head/Camera3D" unique_id=113264626]
+visible = false
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 2.5
+shadow_enabled = true
+spot_range = 18.0
+spot_angle = 22.0
+spot_angle_attenuation = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1083999800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("PlayerShape")
+
+[node name="Level" type="Node3D" parent="." unique_id=1599458575]
+
+[node name="Collision" type="StaticBody3D" parent="Level" unique_id=771122001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
+
+[node name="Floor" type="CollisionShape3D" parent="Level/Collision" unique_id=771122002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("FloorShape")
+
+[node name="WallNorth" type="CollisionShape3D" parent="Level/Collision" unique_id=771122003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 11)
+shape = SubResource("WallNS")
+
+[node name="WallSouth" type="CollisionShape3D" parent="Level/Collision" unique_id=771122004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -11)
+shape = SubResource("WallNS")
+
+[node name="WallEast" type="CollisionShape3D" parent="Level/Collision" unique_id=771122005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2.5, 0)
+shape = SubResource("WallEW")
+
+[node name="WallWest" type="CollisionShape3D" parent="Level/Collision" unique_id=771122006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2.5, 0)
+shape = SubResource("WallEW")
+
+[node name="RoomMain" parent="Level" unique_id=188307475 instance=ExtResource("3_vp8ya")]
+
+[node name="RoomSecond" parent="Level" unique_id=2007127661 instance=ExtResource("3_vp8ya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="Corridor1" parent="Level" unique_id=1207346324 instance=ExtResource("4_xenpo")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5, 0, 0)
+
+[node name="Corridor2" parent="Level" unique_id=1976409539 instance=ExtResource("4_xenpo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="CorridorCorner" parent="Level" unique_id=957623268 instance=ExtResource("5_u8ggr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+
+[node name="Stairs" parent="Level" unique_id=1744185423 instance=ExtResource("6_2n2g1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13)
+
+[node name="Door1" parent="Level" unique_id=101971190 instance=ExtResource("7_ewvnc")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 0)
+
+[node name="Door2" parent="Level" unique_id=669579023 instance=ExtResource("7_ewvnc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="Props" type="Node3D" parent="." unique_id=905719649]
+
+[node name="Desk" parent="Props" unique_id=1312081259 instance=ExtResource("8_s1d3x")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, -2, 0, -1.5)
+
+[node name="Books" parent="Props" unique_id=369316192 instance=ExtResource("9_ki57d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.8, -1.5)
+
+[node name="Table" parent="Props" unique_id=859555839 instance=ExtResource("10_hvafq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="Lamp" parent="Props" unique_id=1969367424 instance=ExtResource("11_kdttj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.8, -0.8)
+
+[node name="Sofa" parent="Props" unique_id=58857650 instance=ExtResource("12_nun78")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, -2)
+
+[node name="SideTable" parent="Props" unique_id=1364305644 instance=ExtResource("13_v3xsg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1.5)
+
+[node name="Lights" type="Node3D" parent="." unique_id=830404849]
+
+[node name="FlickerLight1" type="OmniLight3D" parent="Lights" unique_id=356687479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+light_color = Color(0.9, 0.55, 0.2, 1)
+light_energy = 1.2
+shadow_enabled = true
+omni_range = 6.0
+script = ExtResource("14_apwqo")
+
+[node name="FlickerLight2" type="OmniLight3D" parent="Lights" unique_id=605281993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.2, 0)
+light_color = Color(0.6, 0.3, 0.1, 1)
+light_energy = 0.8
+shadow_enabled = true
+script = ExtResource("14_apwqo")
+
+[node name="CorridorLight" type="OmniLight3D" parent="Lights" unique_id=805273476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+light_color = Color(0.5, 0.45, 0.35, 1)
+light_energy = 0.5
+omni_range = 3.5
+script = ExtResource("14_apwqo")
+
+[node name="Monster" type="CharacterBody3D" parent="." unique_id=535112122 groups=["monster"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, 0)
+script = ExtResource("2_jfteh")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Monster" unique_id=1535729257]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Monster" unique_id=1288704735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("MonsterShape")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=610096311]
+
+[node name="HorrorEffect" type="ColorRect" parent="HUD" unique_id=686631775]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("4_xjmge")
