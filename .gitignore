@@ -7,6 +7,9 @@ addons/godot_mcp/cache/
 # Local machine-specific Claude Code settings
 .claude/settings.local.json
 
+# Local pi-coding-agent session data
+.pi/
+
 # Exported build artifacts (delivered via GitHub Releases instead)
 build/
 

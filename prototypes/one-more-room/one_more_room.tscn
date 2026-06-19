@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://taf7jc4pgbrd"]
+
+[ext_resource type="Script" uid="uid://dv7emgn0wnnrb" path="res://prototypes/one-more-room/ui.gd" id="1_3a513"]
+[ext_resource type="Script" uid="uid://c4fot33ttp6wk" path="res://prototypes/one-more-room/game.gd" id="1_yra8s"]
+[ext_resource type="Script" uid="uid://cuw4w6sqr1grn" path="res://prototypes/one-more-room/deck.gd" id="2_3a513"]
+
+[node name="OneMoreRoom" type="Control" unique_id=909354946]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3a513")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1390880018]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.08, 0.08, 0.15, 1)
+
+[node name="GameController" type="Node" parent="." unique_id=1126860511]
+script = ExtResource("1_yra8s")
+
+[node name="DeckModel" type="Node" parent="." unique_id=904402416]
+script = ExtResource("2_3a513")
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=1666743230]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RunHeader" type="HBoxContainer" parent="MainLayout" unique_id=1976514823]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LblExpedition" type="Label" parent="MainLayout/RunHeader" unique_id=57697466]
+layout_mode = 2
+text = "Expedition 1 / 3"
+
+[node name="HeaderSpacer" type="Control" parent="MainLayout/RunHeader" unique_id=1464648599]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="LblVault" type="Label" parent="MainLayout/RunHeader" unique_id=1730648254]
+layout_mode = 2
+text = "VAULT:  0 g"
+horizontal_alignment = 2
+
+[node name="RoomTrack" type="ScrollContainer" parent="MainLayout" unique_id=1957471338]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="RoomContainer" type="HBoxContainer" parent="MainLayout/RoomTrack" unique_id=519459890]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatePanel" type="VBoxContainer" parent="MainLayout" unique_id=1171887088]
+layout_mode = 2
+
+[node name="LblUnbanked" type="Label" parent="MainLayout/StatePanel" unique_id=2065522617]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "UNBANKED:  0 g"
+
+[node name="LblDanger" type="Label" parent="MainLayout/StatePanel" unique_id=1811402579]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "DANGER (next flip):  0%"
+
+[node name="HazardRow" type="HBoxContainer" parent="MainLayout/StatePanel" unique_id=1725212647]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="RelicBar" type="HBoxContainer" parent="MainLayout" unique_id=1763098188]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="BtnLantern" type="Button" parent="MainLayout/RelicBar" unique_id=936418591]
+layout_mode = 2
+text = "Lantern  [1]"
+
+[node name="ButtonBar" type="HBoxContainer" parent="MainLayout" unique_id=594601999]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BtnPush" type="Button" parent="MainLayout/ButtonBar" unique_id=367306631]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PUSH (one more room)"
+
+[node name="BtnBank" type="Button" parent="MainLayout/ButtonBar" unique_id=1152580391]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "BANK"
+
+[connection signal="pressed" from="MainLayout/RelicBar/BtnLantern" to="." method="_on_lantern_pressed"]
+[connection signal="pressed" from="MainLayout/ButtonBar/BtnPush" to="." method="_on_push_pressed"]
+[connection signal="pressed" from="MainLayout/ButtonBar/BtnBank" to="." method="_on_bank_pressed"]
