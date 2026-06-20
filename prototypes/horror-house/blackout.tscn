@@ -1,0 +1,445 @@
+[gd_scene format=3 uid="uid://cq6gl1x8i7ho6"]
+
+[ext_resource type="Script" uid="uid://b4viy4icybydr" path="res://prototypes/horror-house/game.gd" id="1_u0njo"]
+[ext_resource type="Script" uid="uid://bj1sdjol40hy1" path="res://prototypes/horror-house/world_environment_setup.gd" id="2_hbvot"]
+[ext_resource type="Script" uid="uid://bjvc0m6yvyhjp" path="res://prototypes/horror-house/player.gd" id="3_7itgj"]
+[ext_resource type="Script" uid="uid://cfcgvbbw774el" path="res://prototypes/horror-house/horror_effect_setup.gd" id="4_cbwwo"]
+[ext_resource type="PackedScene" uid="uid://b2dwi0vls5khc" path="res://assets/kenney/dungeon/room-large.glb" id="4_hbvot"]
+[ext_resource type="Script" uid="uid://gk6d78jtnsmo" path="res://prototypes/horror-house/breaker.gd" id="5_7itgj"]
+[ext_resource type="PackedScene" uid="uid://5dn3664rin4q" path="res://assets/horror/3d/props/fuse_box.glb" id="6_cbwwo"]
+[ext_resource type="Script" uid="uid://rcwg5yl8s5op" path="res://prototypes/horror-house/exit_door.gd" id="7_opf2w"]
+[ext_resource type="Script" uid="uid://uerwrh36lrsc" path="res://prototypes/horror-house/fuse_pickup.gd" id="8_8ddig"]
+[ext_resource type="Script" uid="uid://x7xy6wkhnn10" path="res://prototypes/horror-house/flicker_light.gd" id="9_2to0v"]
+[ext_resource type="Script" uid="uid://dlvglm88fke51" path="res://prototypes/horror-house/hud.gd" id="9_l2sqv"]
+[ext_resource type="Script" uid="uid://cpqcdnausa1cu" path="res://prototypes/horror-house/monster.gd" id="10_monster"]
+[ext_resource type="PackedScene" uid="uid://pjmd1qq2ewpa" path="res://assets/horror/3d/monsters/zombie_quaternius.glb" id="11_zombie"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u0njo"]
+radius = 0.35
+height = 1.7
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_monster"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hbvot"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7itgj"]
+size = Vector3(20, 4.2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cbwwo"]
+size = Vector3(20, 4.2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_opf2w"]
+size = Vector3(0.5, 4.2, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ddig"]
+size = Vector3(0.5, 4.2, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7itgj"]
+size = Vector3(0.18, 0.18, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cbwwo"]
+size = Vector3(0.18, 0.18, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_opf2w"]
+size = Vector3(0.18, 0.18, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvt17"]
+albedo_color = Color(0.25, 0.18, 0.2, 1)
+metallic = 0.3
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ddig"]
+size = Vector3(3, 4, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l2sqv"]
+size = Vector3(4, 3, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l2sqv"]
+albedo_color = Color(1, 0.55, 0.3, 1)
+metallic = 0.6
+roughness = 0.4
+emission_enabled = true
+emission = Color(1, 0.6, 0.2, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8ddig"]
+height = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2to0v"]
+albedo_color = Color(1, 0.55, 0.3, 1)
+metallic = 0.6
+roughness = 0.4
+emission_enabled = true
+emission = Color(1, 0.6, 0.2, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l2sqv"]
+height = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ylx58"]
+albedo_color = Color(1, 0.55, 0.3, 1)
+metallic = 0.6
+roughness = 0.4
+emission_enabled = true
+emission = Color(1, 0.6, 0.2, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2to0v"]
+height = 0.35
+
+[node name="Blackout" type="Node3D" unique_id=1614907019]
+script = ExtResource("1_u0njo")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1034651059]
+script = ExtResource("2_hbvot")
+
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=1116576368]
+transform = Transform3D(0.7770561, -0.5224861, 0.3509874, 0.06205745, 0.6185045, 0.7833269, -0.6263647, -0.58690757, 0.51303685, 0, 0, 0)
+light_color = Color(0.5, 0.6, 0.8, 1)
+light_energy = 0.06
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1195600506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4)
+script = ExtResource("3_7itgj")
+
+[node name="Head" type="Node3D" parent="Player" unique_id=687474578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=549971849]
+far = 80.0
+
+[node name="Flashlight" type="SpotLight3D" parent="Player/Head/Camera3D" unique_id=1746352074]
+visible = false
+light_color = Color(1, 0.92, 0.75, 1)
+light_energy = 6.5
+light_indirect_energy = 0.0
+shadow_enabled = true
+spot_range = 14.0
+spot_angle = 42.0
+spot_angle_attenuation = 1.2
+
+[node name="InteractRay" type="RayCast3D" parent="Player/Head/Camera3D" unique_id=1887347443]
+target_position = Vector3(0, 0, -2.6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=814229840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_u0njo")
+
+[node name="Level" type="Node3D" parent="." unique_id=1560839833]
+
+[node name="Lobby" parent="Level" unique_id=188307475 instance=ExtResource("4_hbvot")]
+
+[node name="LevelCollision" type="StaticBody3D" parent="Level" unique_id=595363552]
+
+[node name="Floor" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1454880018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_hbvot")
+
+[node name="WallNorth" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1926618545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, -10)
+shape = SubResource("BoxShape3D_7itgj")
+
+[node name="WallSouth" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1081531095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 10)
+shape = SubResource("BoxShape3D_cbwwo")
+
+[node name="WallEast" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=765173527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.1, 0)
+shape = SubResource("BoxShape3D_opf2w")
+
+[node name="WallWest" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=2140935797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.1, 0)
+shape = SubResource("BoxShape3D_8ddig")
+
+[node name="Interactables" type="Node3D" parent="." unique_id=1202832828]
+
+[node name="Breaker" type="Node3D" parent="Interactables" unique_id=547136916]
+transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 0, 1.2, -9.4)
+script = ExtResource("5_7itgj")
+
+[node name="Slots" type="Node3D" parent="Interactables/Breaker" unique_id=963389937]
+
+[node name="Slot1" type="MeshInstance3D" parent="Interactables/Breaker/Slots" unique_id=320000077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.2, 0)
+mesh = SubResource("BoxMesh_7itgj")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Breaker/Slots/Slot1" unique_id=1652410783]
+visible = false
+light_color = Color(1, 0.85, 0.4, 1)
+light_energy = 1.2
+omni_range = 1.5
+
+[node name="Slot2" type="MeshInstance3D" parent="Interactables/Breaker/Slots" unique_id=848407844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("BoxMesh_cbwwo")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Breaker/Slots/Slot2" unique_id=1376305265]
+visible = false
+light_color = Color(1, 0.85, 0.4, 1)
+light_energy = 1.2
+omni_range = 1.5
+
+[node name="Slot3" type="MeshInstance3D" parent="Interactables/Breaker/Slots" unique_id=1614935555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.2, 0)
+mesh = SubResource("BoxMesh_opf2w")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Breaker/Slots/Slot3" unique_id=148564989]
+visible = false
+light_color = Color(1, 0.85, 0.4, 1)
+light_energy = 1.2
+omni_range = 1.5
+
+[node name="Body" parent="Interactables/Breaker" unique_id=1593996428 instance=ExtResource("6_cbwwo")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, -0.7, 0)
+
+[node name="ExitDoor" type="Node3D" parent="Interactables" unique_id=1244331857]
+script = ExtResource("7_opf2w")
+
+[node name="DoorPanel" type="MeshInstance3D" parent="Interactables/ExitDoor" unique_id=605007571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 9.6)
+material_override = SubResource("StandardMaterial3D_rvt17")
+mesh = SubResource("BoxMesh_8ddig")
+
+[node name="ExitTrigger" type="Area3D" parent="Interactables/ExitDoor" unique_id=1834613293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 9.8)
+
+[node name="Shape" type="CollisionShape3D" parent="Interactables/ExitDoor/ExitTrigger" unique_id=313000261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+shape = SubResource("BoxShape3D_l2sqv")
+
+[node name="Fuse1" type="Area3D" parent="Interactables" unique_id=1242188358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, -3)
+script = ExtResource("8_8ddig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/Fuse1" unique_id=1213001993]
+material_override = SubResource("StandardMaterial3D_l2sqv")
+mesh = SubResource("CylinderMesh_8ddig")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Fuse1" unique_id=1430943921]
+light_color = Color(1, 0.8, 0.4, 1)
+light_energy = 2.5
+omni_range = 3.0
+
+[node name="Fuse2" type="Area3D" parent="Interactables" unique_id=1671389212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, -2)
+script = ExtResource("8_8ddig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/Fuse2" unique_id=769018405]
+material_override = SubResource("StandardMaterial3D_2to0v")
+mesh = SubResource("CylinderMesh_l2sqv")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Fuse2" unique_id=989587010]
+light_color = Color(1, 0.8, 0.4, 1)
+light_energy = 2.5
+omni_range = 3.0
+
+[node name="Fuse3" type="Area3D" parent="Interactables" unique_id=1444827624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
+script = ExtResource("8_8ddig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Interactables/Fuse3" unique_id=2112694065]
+material_override = SubResource("StandardMaterial3D_ylx58")
+mesh = SubResource("CylinderMesh_2to0v")
+
+[node name="Glow" type="OmniLight3D" parent="Interactables/Fuse3" unique_id=700326122]
+light_color = Color(1, 0.8, 0.4, 1)
+light_energy = 2.5
+omni_range = 3.0
+
+[node name="Monster" type="CharacterBody3D" parent="." unique_id=2100000001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+script = ExtResource("10_monster")
+
+[node name="Head" type="Node3D" parent="Monster" unique_id=2100000002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Eyes" type="RayCast3D" parent="Monster/Head" unique_id=2100000003]
+target_position = Vector3(0, 0.8, -8)
+
+[node name="Body" parent="Monster" unique_id=2100000004 instance=ExtResource("11_zombie")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Monster" unique_id=2100000005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_monster")
+
+[node name="Lights" type="Node3D" parent="." unique_id=1608059437]
+
+[node name="CeilingLight" type="OmniLight3D" parent="Lights" unique_id=491780183]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 0)
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 1.2
+shadow_enabled = true
+omni_range = 14.0
+script = ExtResource("9_2to0v")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1504078411]
+script = ExtResource("9_l2sqv")
+
+[node name="HorrorEffect" type="ColorRect" parent="HUD" unique_id=1654156001]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("4_cbwwo")
+
+[node name="FuseCounter" type="Label" parent="HUD" unique_id=1349446775]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 24.0
+offset_bottom = 24.0
+theme_override_colors/font_color = Color(0.85, 0.78, 0.6, 1)
+theme_override_font_sizes/font_size = 28
+text = "FUSES 0/3"
+
+[node name="Prompt" type="Label" parent="HUD" unique_id=1041905029]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = -120.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="Stamina" type="ProgressBar" parent="HUD" unique_id=1971871468]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -184.0
+offset_top = -44.0
+offset_right = -24.0
+offset_bottom = -24.0
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="Overlays" type="Control" parent="HUD" unique_id=2100000010]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Title" type="ColorRect" parent="HUD/Overlays" unique_id=2100000011]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.92)
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Overlays/Title" unique_id=2100000012]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -180.0
+offset_right = 300.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/Overlays/Title/VBox" unique_id=2100000013]
+theme_override_colors/font_color = Color(0.85, 0.2, 0.18, 1)
+theme_override_font_sizes/font_size = 72
+theme_override_constants/outline_size = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "BLACKOUT"
+horizontal_alignment = 1
+
+[node name="Tag" type="Label" parent="HUD/Overlays/Title/VBox" unique_id=2100000014]
+theme_override_colors/font_color = Color(0.6, 0.58, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "three fuses. one way out. something is awake."
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="HUD/Overlays/Title/VBox" unique_id=2100000015]
+custom_minimum_size = Vector2(0, 60)
+
+[node name="Controls" type="Label" parent="HUD/Overlays/Title/VBox" unique_id=2100000016]
+theme_override_colors/font_color = Color(0.85, 0.82, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+text = "WASD move  ·  SHIFT sprint  ·  CTRL crouch  ·  F flashlight\nE interact  ·  ESC release mouse\n\nthe flashlight is your only light — and its beacon.\nsprint to escape, but it hears you run.\n\n[ click  or  press F  to begin ]"
+horizontal_alignment = 1
+
+[node name="Win" type="ColorRect" parent="HUD/Overlays" unique_id=2100000020]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.88)
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Overlays/Win" unique_id=2100000021]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Head" type="Label" parent="HUD/Overlays/Win/VBox" unique_id=2100000022]
+theme_override_colors/font_color = Color(0.45, 0.9, 0.55, 1)
+theme_override_font_sizes/font_size = 64
+text = "YOU ESCAPED"
+horizontal_alignment = 1
+
+[node name="Sub" type="Label" parent="HUD/Overlays/Win/VBox" unique_id=2100000023]
+theme_override_colors/font_color = Color(0.7, 0.7, 0.65, 1)
+theme_override_font_sizes/font_size = 20
+text = "cold air. alive. the house keeps its secrets.\n\n[ click  or  press E  to go back in ]"
+horizontal_alignment = 1
+
+[node name="Death" type="ColorRect" parent="HUD/Overlays" unique_id=2100000030]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.08, 0, 0, 0.9)
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Overlays/Death" unique_id=2100000031]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Head" type="Label" parent="HUD/Overlays/Death/VBox" unique_id=2100000032]
+theme_override_colors/font_color = Color(0.9, 0.15, 0.12, 1)
+theme_override_font_sizes/font_size = 64
+text = "YOU DIED"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HUD/Overlays/Death/VBox" unique_id=2100000033]
+theme_override_colors/font_color = Color(0.65, 0.55, 0.5, 1)
+theme_override_font_sizes/font_size = 22
+text = "HE FOUND YOU"
+horizontal_alignment = 1
+
+[node name="Retry" type="Label" parent="HUD/Overlays/Death/VBox" unique_id=2100000034]
+theme_override_colors/font_color = Color(0.7, 0.7, 0.65, 1)
+theme_override_font_sizes/font_size = 18
+text = "\n[ click  or  press E  to try again ]"
+horizontal_alignment = 1

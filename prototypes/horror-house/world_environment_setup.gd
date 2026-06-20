@@ -15,6 +15,11 @@ func _ready() -> void:
 	env.background_mode = Environment.BG_SKY
 	env.sky = sky
 
+	# Filmic tonemapping — prevents bright emissive lights from clipping to
+	# a pure-white mass (the blown-out look). ACES handles HDR gracefully.
+	env.tonemap_mode = Environment.TONE_MAPPER_ACES
+	env.tonemap_white = 1.2
+
 	# Very dark ambient
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.03, 0.03, 0.05)
@@ -43,13 +48,14 @@ func _ready() -> void:
 	env.ssil_radius = 5.0
 	env.ssil_intensity = 0.8
 
-	# Glow / bloom
+	# Glow / bloom — gentle. High hdr_threshold so only truly bright sources
+	# (flashlight core, fuse emitters) bloom, instead of washing the frame.
 	env.glow_enabled = true
-	env.glow_normalized = false
-	env.glow_intensity = 0.5
-	env.glow_bloom = 0.15
-	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE
-	env.glow_hdr_threshold = 0.8
+	env.glow_normalized = true
+	env.glow_intensity = 0.8
+	env.glow_bloom = 0.08
+	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	env.glow_hdr_threshold = 1.6
 
 	# Color grading — desaturated, slightly green horror palette
 	env.adjustment_enabled = true
