@@ -53,12 +53,14 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
 	add_to_group("player")
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if not interact_ray:
 		interact_ray = _make_interact_ray()
 	flashlight.visible = false
-	# Release the cursor while the title screen is up; recapture on game start.
+	# Release the cursor while the title screen is up; the game root captures it
+	# authoritatively on start_game(). Defer our signal hook past the root's
+	# _ready so the "game" group is populated.
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	await get_tree().process_frame
 	var g := get_tree().get_first_node_in_group("game")
 	if g and g.has_signal("game_started"):
 		g.game_started.connect(_on_started)
@@ -78,9 +80,23 @@ func _on_started() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Ignore gameplay input until the title is dismissed.
 	var g := get_tree().get_first_node_in_group("game")
-	if g and "started" in g and not g.started:
+	var playing: bool = g != null and ("started" in g) and g.started and (not ("game_over" in g) or not g.game_over)
+	# ESC toggles mouse capture during play (release to look around OS / click
+	# windows; click to grab the camera again).
+	if event.is_action_pressed("ui_cancel"):
+		if playing:
+			Input.set_mouse_mode(
+				Input.MOUSE_MODE_VISIBLE
+				if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+				else Input.MOUSE_MODE_CAPTURED)
+		return
+	# Any mouse click during play re-captures the camera if it was released.
+	if playing and event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
+		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Ignore the rest of gameplay input until the title is dismissed.
+	if not playing:
 		return
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		head.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
@@ -94,9 +110,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("interact"):
 		_try_interact()
-
-	if event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _physics_process(delta: float) -> void:

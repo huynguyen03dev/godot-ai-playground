@@ -37,6 +37,18 @@ func _ready() -> void:
 	# Title is visible at start.
 	_win.visible = false
 	_death.visible = false
+	# Overlays are purely visual — never let them swallow mouse clicks (so
+	# clicking the title reliably reaches the game root's flow handler).
+	_set_ignore_input(_title)
+	_set_ignore_input(_win)
+	_set_ignore_input(_death)
+
+
+func _set_ignore_input(node: Node) -> void:
+	if node is Control:
+		(node as Control).mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for c in node.get_children():
+		_set_ignore_input(c)
 
 
 func _on_started() -> void:

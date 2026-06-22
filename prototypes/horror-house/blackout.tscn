@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://x7xy6wkhnn10" path="res://prototypes/horror-house/flicker_light.gd" id="9_2to0v"]
 [ext_resource type="Script" uid="uid://dlvglm88fke51" path="res://prototypes/horror-house/hud.gd" id="9_l2sqv"]
 [ext_resource type="Script" uid="uid://cpqcdnausa1cu" path="res://prototypes/horror-house/monster.gd" id="10_monster"]
+[ext_resource type="Script" path="res://prototypes/horror-house/level_generator.gd" id="12_levelgen"]
 [ext_resource type="PackedScene" uid="uid://pjmd1qq2ewpa" path="res://assets/horror/3d/monsters/zombie_quaternius.glb" id="11_zombie"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u0njo"]
@@ -130,30 +131,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_u0njo")
 
 [node name="Level" type="Node3D" parent="." unique_id=1560839833]
-
-[node name="Lobby" parent="Level" unique_id=188307475 instance=ExtResource("4_hbvot")]
-
-[node name="LevelCollision" type="StaticBody3D" parent="Level" unique_id=595363552]
-
-[node name="Floor" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1454880018]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_hbvot")
-
-[node name="WallNorth" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1926618545]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, -10)
-shape = SubResource("BoxShape3D_7itgj")
-
-[node name="WallSouth" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=1081531095]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 10)
-shape = SubResource("BoxShape3D_cbwwo")
-
-[node name="WallEast" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=765173527]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.1, 0)
-shape = SubResource("BoxShape3D_opf2w")
-
-[node name="WallWest" type="CollisionShape3D" parent="Level/LevelCollision" unique_id=2140935797]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.1, 0)
-shape = SubResource("BoxShape3D_8ddig")
+script = ExtResource("12_levelgen")
 
 [node name="Interactables" type="Node3D" parent="." unique_id=1202832828]
 

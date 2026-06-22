@@ -26,6 +26,7 @@ var power_on: bool = false    # breaker fully engaged
 var door_open: bool = false   # front door released
 var game_over: bool = false   # win or death lock
 var started: bool = false     # title dismissed; gameplay active
+var has_key: bool = false     # found the rusty key → can open the gate
 
 @onready var player: CharacterBody3D = get_tree().get_first_node_in_group("player")
 
@@ -81,12 +82,29 @@ func trigger_death() -> void:
 	died.emit()
 
 
+# ── Key + locked gate (puzzle) ─────────────────────────────────
+func collect_key() -> void:
+	has_key = true
+	_open_gate()
+
+
+func _open_gate() -> void:
+	var lvl := get_tree().get_first_node_in_group("level")
+	if lvl and lvl.has_method("open_gate"):
+		lvl.open_gate()
+	print("[BLACKOUT] The key turns. The gate grinds open.")
+
+
 # ── Flow ─────────────────────────────────────────────────────────
 func start_game() -> void:
 	# Called by the title overlay when the player begins.
 	if started:
 		return
 	started = true
+	# Authoritatively capture the mouse for first-person look. Doing it here (on
+	# the root) avoids the child-_ready ordering race where the player would try
+	# to wire this up before the root joins the "game" group.
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	game_started.emit()
 
 
